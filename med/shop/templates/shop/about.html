@@ -1,0 +1,73 @@
+{% extends 'shop/basic.html' %}
+
+{% load static %}
+
+{% block title %} About Us | My Awesome Cart {% endblock %}
+{% block body %} 
+
+<section class="about" id="about">
+    <h1 class="heading"><span>About</span> Us</h1>
+    <div class="row">
+        <div class="image">
+            <img src="{% static 'shop/images/type2.jpg' %}" alt="About Us Image">
+        </div>
+        <div class="content">
+            <h3>Welcome to Our Medical Store</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id laborum cum reiciendis! Illo consequatur quibusdam nulla debitis autem consequuntur deleniti excepturi praesentium, ab in voluptates, nisi voluptatem? Cupiditate, blanditiis aut?</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus, laudantium neque voluptatum amet fugiat quasi quos voluptates provident veniam illum.</p>
+            <a href="#" class="btn">Learn more</a>
+        </div>
+    </div>
+</section>
+
+<section class="mission" id="mission">
+    <h1 class="heading"><span>Our</span> Mission</h1>
+    <div class="content">
+        <p>Our mission is to provide the best medical supplies at affordable prices. We are committed to improving the health and well-being of our customers by offering a wide range of high-quality products and exceptional customer service.</p>
+    </div>
+</section>
+
+<section class="team" id="team">
+    <h1 class="heading"><span>Meet</span> Our Team</h1>
+    <div class="row">
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card">
+                <img src="{% static 'shop/images/team1.jpeg' %}" class="card-img-top" alt="Team Member">
+                <div class="card-body">
+                    <h5 class="card-title">John Doe</h5>
+                    <p class="card-text">CEO & Founder</p>
+                    <p>John has over 20 years of experience in the pharmaceutical industry and is dedicated to ensuring customer satisfaction.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card">
+                <img src="{% static 'shop/images/team2.jpeg' %}" class="card-img-top" alt="Team Member">
+                <div class="card-body">
+                    <h5 class="card-title">Jane Smith</h5>
+                    <p class="card-text">Chief Pharmacist</p>
+                    <p>Jane is a highly skilled pharmacist with a passion for helping others. She oversees our pharmacy operations.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card">
+                <img src="{% static 'shop/images/team3.jpeg' %}" class="card-img-top" alt="Team Member">
+                <div class="card-body">
+                    <h5 class="card-title">Emily Johnson</h5>
+                    <p class="card-text">Customer Service Manager</p>
+                    <p>Emily ensures that our customers receive the best possible service. She is always ready to assist with any inquiries.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="history" id="history">
+    <h1 class="heading"><span>Our</span> History</h1>
+    <div class="content">
+        <p>Founded in 2000, our medical store has grown from a small local pharmacy to a well-respected provider of medical supplies. Our dedication to quality and customer satisfaction has driven our success over the years.</p>
+    </div>
+</section>
+
+{% endblock %}

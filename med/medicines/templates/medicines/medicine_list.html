@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medicine List</title>
+</head>
+<body>
+    <h1>Medicine List</h1>
+    <ul>
+        {% for medicine in medicines %}
+            <li>{{ medicine.name }} - {{ medicine.expiry_date }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'add_medicine' %}">Add New Medicine</a>
+</body>
+</html>
+
+

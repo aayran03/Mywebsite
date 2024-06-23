@@ -1,0 +1,86 @@
+{% extends 'shop/basic.html' %}
+{% load static %}
+
+{% block title %} Medicines to add{% endblock %}
+
+{% block css %}
+<style>
+    .container{
+        width: 100%;
+        text-align: center;
+      }
+    .bcktl {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        text-align: center;
+        margin-bottom:10px
+        
+    }
+
+    .bcktl:hover {
+        background-color: yellow;
+    }
+
+    .fmr{
+        text-align:center;
+    }
+    input[type="text"] {
+        width: 20%;
+        padding: 5px;
+        margin: 3px 0;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+    /* Ensure all placeholders are of same length */
+    input[type="text"]::placeholder {
+        text-align: center; /* Center-align placeholder text */
+        width: 200px; /* Set placeholder width */
+    }
+    input[type="number"] {
+        width: 10%;
+        padding: 5px;
+        margin: 3px 0;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+    /* Ensure all placeholders are of same length */
+    input[type="number"]::placeholder {
+        text-align: center; /* Center-align placeholder text */
+        width: 100px; /* Set placeholder width */
+    }
+    .specific-button {
+        background-color: blue;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    
+    .specific-button:hover {
+        background-color: green;
+    }
+</style>
+{% endblock %}
+{% block body %}
+    <h1 text align = "center">Add Medicine</h1>
+<div class="fmr">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type ="submit" class="specific-button">Save</button>
+    </form>
+</div>
+<div class="container">
+    <a class ="bcktl" href="{% url 'medicine_list' %}">Back to list</a>
+</div>
+{% endblock body %}

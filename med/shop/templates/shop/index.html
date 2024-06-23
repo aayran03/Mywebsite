@@ -1,0 +1,213 @@
+{% extends 'shop/basic.html' %}
+{% load static %}
+
+{% block css %}
+        .col-md-3 {
+            display: inline-block;
+            margin-left: -4px;
+        }
+
+        .col-md-3 {
+            width: 100%;
+            height: auto;
+        }
+
+
+
+        body .no-padding {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        body .carousel-indicators{
+        bottom:0;
+        margin-bottom: -15px;
+        background-color: #A9A9A9;
+        }
+
+        .carousel-indicators .active{
+        background-color: blue;
+        margin-bottom: -6px;
+        }
+
+        .w3-button {
+          background-color: #f1f1f1; /* Background color */
+          color: #000; /* Text color */
+          border: none; /* Remove border */
+          padding: 10px 15px; /* Padding around the text */
+          font-size: 18px; /* Font size */
+          cursor: pointer; /* Cursor style */
+          transition: background-color 0.3s; /* Smooth background color transition */
+        }
+        
+        .w3-button:hover {
+          background-color: #ddd; /* Darker background color on hover */
+        }
+        
+        .w3-display-left {
+          position: absolute; /* Position absolutely within parent container */
+          top: 50%; /* Align vertically centered */
+          left: 10px; /* Adjust left positioning as needed */
+          transform: translateY(-50%); /* Center vertically */
+        }
+        
+        .w3-display-right {
+          position: absolute; /* Position absolutely within parent container */
+          top: 50%; /* Align vertically centered */
+          right: 10px; /* Adjust right positioning as needed */
+          transform: translateY(-50%); /* Center vertically */
+        }
+        
+        .w3-button::before {
+          font-family: 'Font Awesome 5 Free'; /* Font Awesome family */
+          content: attr(data-icon); /* Insert the data-icon content */
+          margin-right: 8px; /* Space between icon and text */
+        }
+        .carousel-control-prev-icon {
+          margin-top: 100px;
+          background: black no-repeat center center;
+          background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3e%3cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3e%3c/svg%3e");
+          z-index: 1020;
+      }
+      
+        .carousel-control-next-icon {
+          margin-top: 100px;
+          background: black no-repeat center center;
+          background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3e%3c/svg%3e");
+          z-index: 1020;
+      
+      }
+        
+    {% endblock %}
+{% block body %}
+
+
+
+<h1 text align="center">Medicines Catalog</h1>
+<!--        carousel indicators starts from here-->
+
+<div class="container" xmlns:data="http://www.w3.org/1999/xhtml">
+    <div id="demo" class="carousel slide my-3" data-ride="carousel">'
+        <ul class="carousel-indicators">
+            <li data-target="#demo" data-slide-to="0" class="active"></li>
+    {% for i in range %}
+       <li data-target="#demo" data-slide-to="{{i}}" ></li>
+    {% endfor %}
+</ul>
+
+<!--        slideshow starts here-->
+
+<div class="container carousel-inner no-padding">
+
+  <div class="carousel-item active">
+    
+
+
+    {% for i in product %}
+    <div class="col-xs-3 col-sm-3 col-md-3">
+      <div class="card" style="width: 18rem;">
+        <img src='/media/{{i.image}}' class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{i.product_name}}</h5>
+          <p class="card-text">Rs {{i.price}}</p>
+          <button class="btn btn-primary cart">Add To Cart</a>
+        </div>
+      </div>
+    </div>
+    {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+  </div><div class="carousel-item">
+    {% endif %}
+
+    {% endfor %}
+</div>
+
+
+
+
+      </div>
+        </div>
+
+ 
+<a class="carousel-control-prev " href="#demo" role="button" data-slide="prev"> 
+   <span class="carousel-control-prev-icon" aria-hidden="true" ></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#demo" role="button" data-slide="next"> 
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a> 
+
+ {% endblock %}
+ 
+
+
+{% block js %}
+<script>
+
+  var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length} ;
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  x[slideIndex-1].style.display = "block";
+}
+
+ let cart = JSON.parse(localStorage.getItem('cart')) || {};
+
+  // Function to update cart display
+  function updateCartDisplay() {
+      const cartElement = document.getElementById('cart');
+      const popcartElement = document.getElementById('popcart');
+      const itemCount = Object.values(cart).reduce((a, b) => a + b, 0);
+      
+      cartElement.textContent = itemCount;
+      
+      // Update popover content
+      let popoverContent = '<h5>Cart Items</h5><ul>';
+      for (const [id, quantity] of Object.entries(cart)) {
+          popoverContent += `<li>${id}: ${quantity}</li>`;
+      }
+      popoverContent += '</ul>';
+      popcartElement.setAttribute('data-content', popoverContent);
+  }
+  
+  // Add click event listeners to all "Add To Cart" buttons
+  document.querySelectorAll('.cart').forEach(button => {
+      button.addEventListener('click', function() {
+          const productId = this.closest('.card').querySelector('.card-title').textContent;
+          
+          // Increment item count in cart
+          cart[productId] = (cart[productId] || 0) + 1;
+          
+          // Save updated cart to localStorage
+          localStorage.setItem('cart', JSON.stringify(cart));
+          
+          // Update cart display
+          updateCartDisplay();
+          
+          console.log(`Added ${productId} to cart`);
+      });
+  });
+  
+  // Initialize popover
+  $('#popcart').popover({
+      html: true,
+      content: function() {
+          return document.getElementById('popcart').getAttribute('data-content');
+      }
+  });
+  
+  // Initial cart display update
+  updateCartDisplay(); 
+  </script>
+{% endblock %}

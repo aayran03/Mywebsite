@@ -1,0 +1,53 @@
+{% extends 'shop/basic.html' %}
+{% load static %}
+{% block title%} Search Results {% endblock %}
+
+{% block css %}
+
+    .search-results {
+        padding: 20px;
+    }
+    .result-item {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+    }
+    .result-item:last-child {
+        border-bottom: none;
+    }
+    .result-item h3 {
+        margin-bottom: 10px;
+    }
+    .result-item p {
+        color: #666;
+    }
+    .result-item img {
+        max-width: 100px;
+        height: auto;
+        margin-right: 15px;
+        float: left;
+    }
+
+{% endblock %}
+
+{% block body %}
+<div class="container search-results">
+    <h2>Search Results for "{{ query }}"</h2>
+    {% if results %}
+        {% for product in results %}
+            <div class="result-item clearfix">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.product_name }}">
+                {% endif %}
+                <h3>{{ product.product_name }}</h3>
+                <p>{{ product.desc|truncatewords:30 }}</p>
+                <p>Price: ${{ product.price }}</p>
+                <p>Published: {{ product.pub_date }}</p>
+                <a href="{% url 'ProductView' myid=product.id %}" class="btn btn-primary">View Product</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No results found for your search query.</p>
+    {% endif %}
+</div>
+{% endblock %}
