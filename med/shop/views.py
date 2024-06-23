@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib.auth.hashers import  check_password
 from django.http import HttpResponse
-from . models import product
+from .models import product
 from math import ceil
-from .models import Contact
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from .models import Customer
@@ -11,10 +10,14 @@ from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db.models import Q
+from .models import Contact, Orders
+import logging
 
 
-
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 # Create your views here.
+
 
 def index(request):
     products= product.objects.all()
@@ -55,10 +58,25 @@ def search(request):
     return render(request, 'shop/search.html', context)
 
 def productView(request, myid):
-    product = product.objects.get(id=myid)
-    return render(request, "shop/prodView.html", {'product':product})
+    products = product.objects.filter(id=myid)
+    return render(request, "shop/prodView.html", {'product':products[0]})
 
-def checkout(request): 
+def checkout(request):
+    if request.method=="POST":
+        items_json= request.POST.get('itemsJson', '')
+        name=request.POST.get('name', '')
+        email=request.POST.get('email', '')
+        address=request.POST.get('address1', '') + " " + request.POST.get('address2', '')
+        city=request.POST.get('city', '')
+        state=request.POST.get('state', '')
+        zip_code=request.POST.get('zip_code', '')
+        phone=request.POST.get('phone', '')
+
+        order = Orders(items_json= items_json, name=name, email=email, address= address, city=city, state=state, zip_code=zip_code, phone=phone)
+        order.save()
+        thank=True
+        id=order.order_id
+        return render(request, 'shop/checkout.html', {'thank':thank, 'id':id})
     return render(request, 'shop/checkout.html')
 
 from django.shortcuts import render, redirect

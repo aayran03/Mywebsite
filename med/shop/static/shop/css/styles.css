@@ -187,3 +187,26 @@ background-color: blue;
     content: attr(data-icon); /* Insert the data-icon content */
     margin-right: 8px; /* Space between icon and text */
   }
+
+  @media (max-width:450px){
+    html{
+        font-size: 40%;
+    }
+
+}
+@media (max-width:650px){
+    html{
+        font-size: 50%;
+    }
+
+}
+@media(max-width:1200px){
+    html{
+        font-size: 60%;
+    }
+}
+@media(max-width:380px){
+    html{
+        font-size: 30%;
+    }
+}
