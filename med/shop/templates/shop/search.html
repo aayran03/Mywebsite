@@ -41,7 +41,7 @@
                 {% endif %}
                 <h3>{{ product.product_name }}</h3>
                 <p>{{ product.desc|truncatewords:30 }}</p>
-                <p>Price: ${{ product.price }}</p>
+                <p>Price: Rs {{ product.price }}</p>
                 <p>Published: {{ product.pub_date }}</p>
                 <a href="{% url 'ProductView' myid=product.id %}" class="btn btn-primary">View Product</a>
             </div>

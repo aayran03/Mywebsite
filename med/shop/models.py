@@ -73,3 +73,10 @@ class OrderUpdate(models.Model):
 
     def __str__(self):
         return self.update_desc[0:7] + "..."
+
+class Prescription(models.Model):
+    file = models.ImageField(upload_to='prescriptions/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Prescription #{self.id}'

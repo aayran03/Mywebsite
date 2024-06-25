@@ -11,13 +11,13 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="{% static 'shop/css/styles.css' %}">
-    <title>{% block title%} {% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
     <style>
         .navbar {
             position: relative;
-            z-index: 1030; 
+            z-index: 1030;
         }
-        
+
         .footer {
             background: #333;
             color: #fff;
@@ -57,56 +57,51 @@
             color: #ff6347;
         }
         {% block css %} {% endblock %}
-    </style> 
-       
-
-       
+    </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/shop">Aayu Med store</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url '' %}">Aayu Med Store</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/shop">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/shop/about">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/shop/tracker">Tracker</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/shop/contact">Contact Us</a>
+            </li>
+            {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}">SignUp/Login</a>
+                </li>
+            {% endif %}
+        </ul>
+        <form id="search-form" class="form-inline my-2 my-lg-0" action="{% url 'search' %}" method="GET">
+            <input id="search-input" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">
+            <button id="search-button" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <button type="button" class="btn btn-secondary mx-2" id="popcart" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="">
+            Cart (<span id="cart">0</span>)
         </button>
-    
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/shop">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/shop/about">About Us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/shop/tracker">Tracker</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/shop/contact">Contact Us</a>
-                </li>
-                {% if request.user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'signup' %}">SignUp/Login</a>
-                    </li>
-                {% endif %}
-            </ul>
-            <form id="search-form" class="form-inline my-2 my-lg-0" action="{% url 'search' %}" method="GET">
-                <input id="search-input" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">
-                <button id="search-button" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-            <button type="button" class="btn btn-secondary mx-2" id="popcart" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Vivamus
-sagittis lacus vel augue laoreet rutrum faucibus.">
+    </div>
+</nav>
 
-
-  Cart(<span id="cart">0</span>)
-</button>
-        </div>
-    </nav>
-{% block body %}  {% endblock %}
+{% block body %}{% endblock %}
 
 <!-- Footer -->
 <footer class="footer">
@@ -132,11 +127,69 @@ sagittis lacus vel augue laoreet rutrum faucibus.">
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-    {% block js %} {% endblock %}
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+{% block js %}
+<script>
+// JavaScript code for managing the shopping cart
+// This script manages cart operations and interacts with the HTML elements to update cart information
+
+// Initialize cart from localStorage or create a new empty object
+if (localStorage.getItem('cart') == null) {
+    var cart = {};
+} else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    updateCart(cart);
+}
+
+// Add event listener to handle clicks on 'Add to Cart' buttons
+$('.divpr').on('click', 'button.cart', function() {
+    var idstr = this.id.toString();
+    if (cart[idstr] != undefined) {
+        qty = cart[idstr][0] + 1;
+    } else {
+        qty = 1;
+        name = document.getElementById('namepr' + idstr).innerHTML;
+        price = document.getElementById('pricepr' + idstr).innerHTML;
+        cart[idstr] = [qty, name, parseInt(price)];
+    }
+    updateCart(cart);
+});
+
+// Update popover content and display cart details
+$('#popcart').popover();
+
+function updateCart(cart) {
+    var sum = 0;
+    for (var item in cart) {
+        sum += cart[item][0];
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    document.getElementById('cart').innerHTML = sum;
+    updatePopover(cart);
+}
+
+function updatePopover(cart) {
+    var popStr = "";
+    popStr += "<h5>Shopping Cart</h5><div class='mx-2 my-2'>";
+    var i = 1;
+    for (var item in cart) {
+        popStr += "<b>" + i + "</b>. ";
+        popStr += cart[item][1] + " Qty: " + cart[item][0] + '<br>';
+        i++;
+    }
+    popStr += "</div> <a href='/shop/checkout'><button class='btn btn-primary'>Checkout</button></a> <button class='btn btn-primary' onclick='clearCart()'>Clear Cart</button>";
+    document.getElementById('popcart').setAttribute('data-content', popStr);
+}
+
+function clearCart() {
+    localStorage.clear();
+    cart = {};
+    updateCart(cart);
+}
+</script>
+{% endblock %}
 </body>
 </html>

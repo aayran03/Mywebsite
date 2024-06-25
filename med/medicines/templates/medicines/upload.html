@@ -1,0 +1,96 @@
+{% extends 'shop/basic.html' %}
+{% load static %}
+
+{% block title %} Upload CSV {% endblock %}
+
+{% block css %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        color: #343a40;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 100%;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    input[type="file"] {
+        padding: 10px;
+        margin-bottom: 10px;
+        width: calc(100% - 22px); /* Adjust width to fit container */
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    .specific-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-top: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .specific-button:hover {
+        background-color: #0056b3;
+    }
+
+    .bcktl {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: green;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    .bcktl:hover {
+        background-color: #006622;
+        color:white;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<h1>Upload CSV</h1>
+<div class="form-container">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="csv_file" accept=".csv">
+        <br><br>
+        <button type="submit" class="specific-button">Upload</button>
+    </form>
+</div>
+<div class="container">
+    <a class="bcktl" href="{% url 'medicine_list' %}">Back to list</a>
+</div>
+{% endblock %}

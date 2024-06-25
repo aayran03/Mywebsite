@@ -61,6 +61,7 @@
 {% endblock %}
 {% block js %}
 <script>
+    
 if (localStorage.getItem('cart') == null) {
     var cart = {};
 } else {
@@ -95,5 +96,20 @@ alert('Thanks for ordering with us. Your order is {{id}}. Use it to track your o
 localStorage.clear();
 document.location = "/shop";
 {% endif %}
+
+$('#popcart').popover({
+    html: true,
+    content: function() {
+        return $('#popcart').attr('data-content');
+    }
+});
+
+// Show popover when clicking on cart button
+$('#popcart').on('click', function() {
+    $(this).popover('toggle');
+});
+
+// Initialize cart count in navbar on page load
+updateCart(cart);
 </script>
 {% endblock %}

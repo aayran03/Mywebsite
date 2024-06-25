@@ -2,9 +2,13 @@
 from django.contrib import admin
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.urls import reverse
+from django.urls import reverse,path
 from django.http import HttpResponseRedirect
 from .models import Medicine
+import pandas as pd
+from django.utils.safestring import mark_safe
+from django.template.response import TemplateResponse
+from django import forms
 
 
 
@@ -37,8 +41,14 @@ def delete_medicines(modeladmin, request, queryset):
     queryset.delete()
     messages.success(request, 'Selected medicines have been deleted.')
 
+
+
 class MedicineAdmin(admin.ModelAdmin):
     list_display = ('name', 'identification_number', 'expiry_date', 'quantity')
+    search_fields = ('name', 'identification_number')
     actions = [mark_as_expired, increase_quantity, delete_medicines]
+
+
+
 
 admin.site.register(Medicine, MedicineAdmin)

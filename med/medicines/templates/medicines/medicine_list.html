@@ -1,17 +1,161 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Medicine List</title>
-</head>
-<body>
-    <h1>Medicine List</h1>
-    <ul>
-        {% for medicine in medicines %}
-            <li>{{ medicine.name }} - {{ medicine.expiry_date }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'add_medicine' %}">Add New Medicine</a>
-</body>
-</html>
+{% extends 'shop/basic.html' %}
+{% load static %}
+
+{% block title %} Medicine List {% endblock %}
+
+{% block css %}
+
+<style>
+
+    .container {
+        padding: 20px;
+        border-radius: 10px;
+        color: white;
+    }
+
+    .btnsw {
+        text-align: center; /* Centers inline and inline-block elements horizontally */
+        margin-top: 20px; /* Adjust spacing from the top as needed */
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 18px;
+        text-align: left;
+    }
+    table thead tr {
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+        font-weight: bold;
+    }
+    table th, table td {
+        padding: 12px 15px;
+    }
+    table tbody tr {
+        border-bottom: 1px solid #dddddd;
+        transition: transform 0.2s ease-in-out;
+    }
+    table tbody tr:hover {
+        transform: scale(1.05); /* Zoom effect on hover */
+    }
+
+    table tbody tr:last-of-type {
+        border-bottom: 2px solid #009879;
+    }
+    .button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #009879;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px #006653;
+        margin-bottom: 10px;
+        transition: transform 0.2s ease-in-out;
+        
+    }
+    .button:hover {
+        background-color: yellow;
+        transform: scale(1.1)
+    }
+    .button:active {
+        background-color: yellow;
+        box-shadow: 0 2px #006653;
+        transform: translateY(2px);
+    }
+    .warning {
+        background-color: #ffd967; 
+    }
+    .expired {
+        background-color: #ffcccc; /* Light red for expired medicines */
+    }
+    #searchInput {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        box-sizing: border-box; /* Ensures padding and border are included in the width */
+    }
+
+    /* Styling for search input focus state */
+    #searchInput:focus {
+        outline: none;
+        border-color: #009879; /* Highlight border color on focus */
+        box-shadow: 0 0 5px rgba(0, 152, 121, 0.5); /* Subtle shadow effect on focus */
+    }
+
+</style>
+{% endblock %}
+
+{% block body%}
+
+<div class = "hding">
+    <h1 style="text-align: center; font-size:6.5rem">Medicine List</h1>
+</div>
+
+<div class="container">
+    <input type="text" id="searchInput" placeholder="Search for medicines...">
+    <table id = "medicineTable">
+        <thead>
+            <tr>
+                <th>Name </th>
+                <th>Expiry Date</th>
+                <th>Days Left</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for medicine in medicines %}
+            <tr {% if medicine.expiry_days_left <= 0 %}
+            class="expired"
+            {%elif medicine.expiry_days_left <= 60%}
+            class="warning"
+        {% endif %}>
+                        <td>{{ medicine.name }}</td>
+                        <td>{{ medicine.expiry_date }}</td>
+                        <td>{{ medicine.expiry_days_left }}</td>
+                        <td>{{ medicine.quantity }}</td>
+                    </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class = "btnsw">
+    <a href="{% url 'add_medicine' %}" class="button">Add New Medicine</a>
+    <a href="{% url 'upload' %}" class="button">Upload Medicine</a>
+</div>
 
 
+<script>
+    // JavaScript for table search and sorting
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById('searchInput');
+        const table = document.getElementById('medicineTable');
+        const headerCells = table.querySelectorAll('thead th[data-sort]');
+        const rows = Array.from(table.querySelectorAll('tbody tr'));
+
+        // Search functionality
+        searchInput.addEventListener('keyup', function() {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+
+            rows.forEach(row => {
+                const cells = Array.from(row.querySelectorAll('td'));
+                const found = cells.some(cell => cell.textContent.toLowerCase().includes(searchTerm));
+                row.style.display = found ? '' : 'none';
+            });
+        });
+        });
+    </script>
+
+
+{%endblock%}

@@ -1,59 +1,94 @@
-
 {% extends 'shop/basic.html' %}
-
 {% load static %}
 
 {% block title %} LogIn {% endblock %}
+
+{% block css %}
+<style>
+    /* Blur effect for background */
+    .bcktl{
+        
+    }
+    .blur-bg {
+        background-image: url("{% static 'shop/images/background.png' %}") ;
+        background-size: cover;
+        background-position: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        filter: blur(10px);
+        z-index: -1;
+    }
+
+    /* Container for login card */
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Adjust as needed */
+    }
+
+    /* Card style */
+    .login-card {
+        width: 300px;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Login form styling */
+    .login-form {
+        margin-bottom: 20px;
+    }
+
+    /* Additional styling */
+    .login-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .signup-btn {
+        text-align: center;
+        margin-top: 10px;
+    }
+</style>
+{% endblock %}
+
 {% block body %}
-<div class="container">
-    <div class="p-4 m-4">
-        <div class="col-lg-4 mt-4 border mb-4 mx-auto rounded pt-4">
-            <div class="text-center col">
-            
-                <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Shopping_cart_with_food_clip_art_2.svg/307px-Shopping_cart_with_food_clip_art_2.svg.png" alt=""
-                class="" style="height: 150px;">
-            <!-- <hr> -->
-            <div class="display-8">Create An Account</div>
-            <hr>
+<div class="blur-bg"></div>
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Shopping_cart_with_food_clip_art_2.svg/307px-Shopping_cart_with_food_clip_art_2.svg.png" alt="Shopping Cart" style="height: 100px;">
+            <h2>Create An Account</h2>
+        </div>
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endif %}
+        <form action="{% url 'login' %}" method="post" class="login-form">
+            {% csrf_token %}
+            <!-- email -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" value="{{ values.email }}" class="form-control" placeholder="example@gmail.com" required>
             </div>
-            <h3 hidden class="alert alert-light border mt-4 mb-4 rounded">Login Here</h3>
-            <form action="{% url 'login' %}" method="post">
-                
-                {% csrf_token %}
-
-                {% if error%}
-                <div class="alert alert-danger" role="alert">
-                    {{error}}
-                </div>
-                {% endif %}
-                <!-- email -->
-                <div class="form-group">
-                    <label for="">Email</label>
-                    <input required type="email" name="email" id=""
-                    value="{{values.email}}" 
-                    class=" form-control-sm form-control" placeholder="example@gmail.com">
-                </div>
-
-
-                <!-- password -->
-                <div class="form-group">
-                    <label for="">Password</label>
-                    <input type="password" 
-                    name="password" 
-                    id=""
-                     class="form-control form-control-sm" placeholder="********">
-                </div>
-
-                <hr>
-                <div class="form-group">
-                    <input class="btn btn-sm btn-info col-lg-4" type="submit" value="Login">
-                </div>
-
-                
-            </form>
+            <!-- password -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" class="form-control" placeholder="********" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-info btn-block">Login</button>
+            </div>
+        </form>
+        <div class="signup-btn">
+            <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
         </div>
     </div>
 </div>
-
-  {% endblock %}
+{% endblock %}

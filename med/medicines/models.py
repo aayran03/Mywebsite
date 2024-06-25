@@ -13,3 +13,8 @@ class Medicine(models.Model):
 
     def is_near_expiry(self):
         return self.expiry_date <= timezone.now().date() + timezone.timedelta(days=30)
+    
+    def expiry_days_left(self):
+        today = timezone.now().date()
+        days_left = (self.expiry_date - today).days
+        return days_left

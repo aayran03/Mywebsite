@@ -13,7 +13,7 @@ from django.db.models import Q
 from .models import Contact, Orders, OrderUpdate
 import logging
 import json
-
+from .models import Prescription
 
 # Create your views here.
 
@@ -169,3 +169,18 @@ class Login(View):
 def logout_view(request):
     logout(request)
     return redirect('/shop/')
+
+def uploadPres(request):
+    if request.method == 'POST':
+        prescription_file = request.FILES.get('prescription_file')
+        if prescription_file:
+            # Save the uploaded file or process it as needed
+            # Example: Saving the prescription file to a model
+            prescription = Prescription(file=prescription_file)
+            prescription.save()
+            messages.success(request, 'Prescription uploaded successfully.')
+            return redirect('shop/')
+        else:
+            messages.error(request, 'No file selected.')
+    
+    return render(request, 'shop/uploadPres.html')
